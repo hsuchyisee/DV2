@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interactive Tourism Analysis Dashboard</title>
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+  
+  
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+  <link rel="stylesheet" href="https://purecss.io/css/pure-min.css">
+  
+</head>
+<body>
+  <div class="main-container">
+    <div class="top-bar">
+      <div class="top-bar-text">
+        <h1>DV Airlines</h1>
+      </div>
+      <div class="top-bar-text">
+    <h1>
+      <span>DATA</span>
+      <span class="airplane-icon">✈︎</span>
+      <span>WORLD</span>
+    </h1>
+  </div>
+      <div class="top-bar-text"><h1>Flight: FIT3179</h1></div>
+      
+    </div>
+    
+    <div class="content-wrapper">
+  <hr class="hr3">
+
+<div class="pure-g">
+  <div class="pure-u-1">
+    <div id="map_plot" class="vis-container"></div>
+  </div>
+</div>
+
+<hr class="hr3">
+
+<div class="pure-g">
+  <div class="pure-u-1">
+    <div id="area_plot" class="vis-container"></div>
+  </div>
+</div>
+
+<hr class="hr3">
+
+<div class="pure-g">
+  <div class="pure-u-1-2">
+    <div id="scatter_plot" class="vis-container"></div>
+  </div>
+  <div class="pure-u-1-2">
+    <div id="pyramid" class="vis-container"></div>
+  </div>
+</div>
+
+<!-- <hr class="hr3"> -->
+
+<!-- <div class="pure-g">
+  <div class="pure-u-1">
+    <div class="description description-center">
+      <h3>Understanding Data Units:</h3>
+      <ul class="data-units-list">
+        <li><strong>Tourism Exports:</strong> Tourism services exported (USD millions)</li>
+        <li><strong>Tourism Departures:</strong> People traveling abroad from residence country</li>
+        <li><strong>Tourism Expenditures:</strong> Resident spending abroad (USD millions)</li>
+        <li><strong>Inflation:</strong> Annual price change (percentage)</li>
+        <li><strong>Unemployment:</strong> Unemployed labor force (percentage)</li>
+        <li><strong>Tourism Receipts:</strong> International tourism revenue (USD)</li>
+        <li><strong>Bubble Size:</strong> Tourism arrivals (visitor numbers)</li>
+        <li><strong>Bubble Color:</strong> GDP in USD (darker = higher)</li>
+      </ul>
+    </div>
+  </div>
+</div> -->
+<!-- 
+<hr class="hr3">
+<div class="pure-g">
+  <div class="pure-u-1">
+    <div id="treemap" class="vis-container"></div>
+  </div>
+</div> -->
+
+<hr class="hr3">
+<div class="pure-g">
+  <div class="pure-u-1">
+    <div id="waffle" class="vis-container"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  // Embed the map visualization
+  var mapSpec = "js/map.vg.json";
+  vegaEmbed('#map_plot', mapSpec, { 
+    "actions": false,
+    "width": 800,
+    "height": 500
+  }).then(function(result) {
+  }).catch(console.error);
+
+  // Embed the area visualization
+  var areaSpec = "js/filters.vg.json";
+  vegaEmbed('#area_plot', areaSpec, { 
+    "actions": false
+  }).then(function(result) {
+    // Force centering after embed
+    const embed = document.querySelector('#area_plot .vega-embed');
+    if (embed) {
+      embed.style.margin = '0 auto';
+      embed.style.display = 'block';
+    }
+  }).catch(console.error);
+
+  // Embed the scatter plot visualization
+  var scatterSpec = "js/interactive_bubble_plot.vg.json";
+  vegaEmbed('#scatter_plot', scatterSpec, { 
+    "actions": false,
+    "width": 500,
+    "height": 400
+  }).then(function(result) {
+  }).catch(console.error);
+
+  // var treeSpec = "js/mosaic.vg.json";
+  // vegaEmbed('#treemap', treeSpec, { "actions": false }).then(function(result) {
+  // }).catch(console.error);
+
+  var waffleSpec = "js/waffle.vg.json";
+  vegaEmbed('#waffle', waffleSpec, { "actions": false }).then(function(result) {
+  }).catch(console.error);
+
+  var pyrSpec = "js/pop_pyr.vg.json";
+  vegaEmbed('#pyramid', pyrSpec, { 
+    "actions": false,
+    "width": 500,
+    "height": 400
+  }).then(function(result) {
+  }).catch(console.error);
+</script>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 450,
+  "title": "Tourism Analysis: Interactive Comparison with Economic Factors",
+  "data": {
+    "url": "data/world_tourism_economy_data.csv"
+  },
+  "params": [
+    {
+      "name": "Factor_selection",
+      "value": "tourism_exports",
+      "bind": {
+        "input": "select",
+        "options": [
+          "tourism_exports",
+          "tourism_departures",
+          "tourism_expenditures",
+          "inflation",
+          "unemployment"
+        ],
+        "labels": [
+          "Tourism Exports",
+          "Tourism Departures", 
+          "Tourism Expenditures",
+          "Inflation",
+          "Unemployment"
+        ],
+        "name": "Compare Tourism Receipts vs: "
+      }
+    }
+  ],
+  "transform": [
+    
+    {"filter": "datum.tourism_receipts > 0"},
+    {"filter": "datum.year == 2018"},
+    {"filter": "!isValid(datum.country_code) || length(datum.country_code) == 3"},
+    {
+      "calculate": "Factor_selection == 'tourism_exports' ? datum.tourism_exports : Factor_selection == 'tourism_departures' ? datum.tourism_departures : Factor_selection == 'tourism_expenditures' ? datum.tourism_expenditures : Factor_selection == 'inflation' ? datum.inflation : datum.unemployment",
+      "as": "selected_factor"
+    },
+    {"filter": "datum.selected_factor > 0"}
+  ],
+  "encoding": {
+    "x": {
+      "field": "selected_factor",
+      "type": "quantitative",
+      "title": "Selected Economic Factor",
+      "axis": {
+        "tickCount": 6,
+        "grid": true,
+        "gridOpacity": 0.3,
+        "tickMinStep": 1
+      },
+      "scale": {
+        "type": "linear", 
+        "nice": true,
+        "zero": false,
+        "padding": 10
+      }
+    },
+    "y": {
+      "field": "tourism_receipts",
+      "type": "quantitative",
+      "title": "Tourism Receipts (USD)",
+      "axis": {"tickCount": 6, "grid": true},
+      "scale": {"type": "log", "nice": true}
+    }
+  },
+  "layer": [
+    {
+      "mark": "circle",
+      "encoding": {
+        "size": {
+          "field": "tourism_arrivals",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [100000, 1000000, 5000000, 20000000, 50000000],
+            "range": [20, 60, 120, 200, 300, 400]
+          },
+          "legend": {"format": ".1s", "title": "Tourism Arrivals"}
+        },
+        "color": {
+          "field": "gdp",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [1000000000, 10000000000, 100000000000, 1000000000000],
+            "range": ["#ffffcc", "#c7e9b4", "#7fcdbb", "#41b6c4", "#253494"]
+          },
+          "legend": {"format": ".1s", "title": "GDP (USD)"}
+        },
+        "opacity": {"value": 0.7},
+        "tooltip": [
+          {"field": "country", "type": "nominal", "title": "Country"},
+          {"field": "year", "type": "ordinal", "title": "Year"},
+          {"field": "tourism_receipts", "type": "quantitative", "format": ",", "title": "Tourism Receipts (USD)"},
+          {"field": "tourism_arrivals", "type": "quantitative", "format": ",", "title": "Tourism Arrivals"},
+          {"field": "selected_factor", "type": "quantitative", "format": ".2f", "title": "Selected Factor"},
+          {"field": "gdp", "type": "quantitative", "format": ".2s", "title": "GDP (USD)"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -12,
+        "fontSize": 11,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "text": {"field": "country", "type": "nominal"},
+        "color": {"value": "black"},
+        "opacity": {
+          "condition": {
+            "test": "datum['country'] == 'United States' || datum['country'] == 'Spain' || datum['country'] == 'France' || datum['country'] == 'Italy' || datum['country'] == 'China' || datum['country'] == 'Germany' || datum['country'] == 'United Kingdom'",
+            "value": 1
+          },
+          "value": 0
+        },
+        "tooltip": [
+          {"field": "country", "type": "nominal", "title": "Country"},
+          {"field": "year", "type": "ordinal", "title": "Year"},
+          {"field": "tourism_receipts", "type": "quantitative", "format": ",", "title": "Tourism Receipts (USD)"},
+          {"field": "tourism_arrivals", "type": "quantitative", "format": ",", "title": "Tourism Arrivals"},
+          {"field": "selected_factor", "type": "quantitative", "format": ".2f", "title": "Selected Factor"},
+          {"field": "gdp", "type": "quantitative", "format": ".2s", "title": "GDP (USD)"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "bottom",
+        "dx": -10,
+        "dy": -10,
+        "fontSize": 11,
+        "fontStyle": "italic",
+        "color": "#666"
+      },
+      "data": {"values": [{"annotation": "Higher GDP countries tend to have higher tourism receipts"}]},
+      "encoding": {
+        "text": {"field": "annotation", "type": "nominal"},
+        "x": {"value": 580},
+        "y": {"value": 430}
+      }
+    }
+  ]
+}

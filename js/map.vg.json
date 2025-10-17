@@ -1,0 +1,161 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 900,
+    "height": 600,
+    "title": "Countries by international tourism arrivals",
+    "projection": {
+      "type": "orthographic",
+  "rotate": {"expr": "[Rotate, 0]"},
+  "clipAngle": 90
+    },
+    "config": {
+      "view": {
+        "stroke": null
+      }
+    }
+    ,
+    "params": [
+      {
+      "name": "Rotate",
+      "value": 0,
+      "bind": {"input": "range", "min": -180, "max": 179, "step": 1}
+    },
+      {
+        "name": "Year_Selection",
+        "value": 2019,
+        
+        "bind": {
+          "input": "range",
+          "min": 1995,
+          "max": 2022,
+          "step": 1,
+          "name": "Select Year"
+        }
+      }
+    ],
+    "layer": [
+      {
+        "data": {"sphere": true},
+        "mark": {"type": "geoshape", "fill": "#a6cee3", "stroke": null}
+      },
+      {
+        "data": {
+          "url": "topojson/WorldMapGraticulesOcean.topojson",
+          "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+        },
+        "transform": [
+        {
+          "calculate": "'Data is not available in ' + datum.properties.NAME",
+          "as": "note"
+        }
+        ],
+        "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
+      },
+      {
+        "data": {
+          "url": "topojson/WorldMapGraticulesOcean.topojson",
+          "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
+        },
+        "mark": {"type": "geoshape", "fill": null, "stroke": "#777", "strokeWidth": 0.5}
+      },
+      {
+        "data": {
+          "values": {
+            "type": "FeatureCollection",
+            "features": [
+              {"type":"Feature","geometry":{"type":"LineString","coordinates":[[179.9999,-90],[179.9999,90]]}},
+              {"type":"Feature","geometry":{"type":"LineString","coordinates":[[-179.9999,-90],[-179.9999,90]]}}
+            ]
+          }
+        },
+        "mark": {"type": "geoshape", "fill": null, "stroke": "#555", "strokeWidth": 0.8, "strokeDash": [4,2]}
+      },
+      {
+        "data": {
+          "url": "topojson/WorldMapGraticulesOcean.topojson",
+          "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+        },
+        "transform": [
+          {
+            "lookup": "properties.ISO_A3",
+            "from": {
+              "data": {"url": "data/international-tourist-trips-clean.csv"},
+              "key": "Code",
+              "fields": ["Entity", "Year", "Inbound arrivals of tourists"]
+            }
+          },
+          {"filter": "datum.Year == Year_Selection"},
+          {"calculate": "toNumber(datum['Inbound arrivals of tourists'])", "as": "arrivals"},
+          {"filter": "!isFinite(datum.arrivals) || datum.arrivals <= 0"},
+          {"calculate": "geoCentroid('feature', datum)", "as": "centroid"},
+          {"calculate": "datum.centroid[0]", "as": "center_lon"},
+          {"calculate": "datum.centroid[1]", "as": "center_lat"},
+          {"filter": "(Rotate * -1) - 90 < datum.center_lon && datum.center_lon < (Rotate * -1) + 90"}
+        ],
+        "mark": {
+          "type": "text",
+          "text": "✕",
+          "fontSize": 12,
+          "color": "#d62728",
+          "fontWeight": "bold"
+        },
+        "encoding": {
+          "longitude": {"field": "center_lon", "type": "quantitative"},
+          "latitude": {"field": "center_lat", "type": "quantitative"},
+          "tooltip": [
+            {"field": "properties.NAME", "type": "nominal", "title": "Country"},
+            {"field": "Year_Selection", "type": "quantitative", "title": "Year"}
+          ]
+        }
+      },
+      {
+        "data": { "url": "data/international-tourist-trips-clean.csv" },
+        "transform": [
+          { "filter": "datum.Year == Year_Selection" },
+          { "calculate": "toNumber(datum['Inbound arrivals of tourists'])", "as": "arrivals_selected_year" },
+          { "filter": "isFinite(datum.arrivals_selected_year) && datum.arrivals_selected_year > 0" },
+          { "calculate": "toNumber(datum['Longitude (average)'])", "as": "lon" },
+          { "calculate": "toNumber(datum['Latitude (average)'])", "as": "lat" },
+          { "filter": "(Rotate * -1) - 90 < datum.lon && datum.lon < (Rotate * -1) + 90" }
+        ],
+        "mark": { "type": "circle", "tooltip": { "content": "data" }, "stroke": "white", "strokeWidth": 0.4 },
+        "encoding": {
+          "longitude": { "field": "lon", "type": "quantitative" },
+          "latitude": { "field": "lat", "type": "quantitative" },
+          "size": {
+            "field": "arrivals_selected_year",
+            "type": "quantitative",
+            "title": "International Tourism Arrivals",
+            "scale": { 
+              "type": "sqrt", 
+              "domain": [1, 90000000], 
+              "range": [20, 400] 
+            },
+            "legend": {
+              "title": "Annual Tourist Arrivals",
+              "titleFontSize": 15,
+              "titleFontWeight": "bold",
+              "labelFontSize": 13,
+              "symbolType": "circle",
+              "symbolStrokeColor": "white",
+              "symbolStrokeWidth": 0.4,
+              "symbolFillColor": "#4682b4",
+              "values": [1000, 10000, 100000, 1000000, 10000000, 50000000],
+              "format": ".2s",
+              "orient": "right",
+              "offset": 200,
+              "direction": "vertical",
+              "gradientLength": 200,
+              "labelLimit": 80
+
+            }
+          },
+          "tooltip": [
+            { "field": "Entity", "type": "nominal", "title": "Country" },
+            { "field": "arrivals_selected_year", "type": "quantitative", "title": "Tourism Arrivals", "format": "," },
+            { "field": "Year", "type": "quantitative", "title": "Year" }
+          ]
+        }
+      }
+    ]
+  }

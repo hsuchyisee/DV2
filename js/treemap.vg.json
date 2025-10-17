@@ -1,0 +1,89 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+      "url": "data/average-expenditures-of-tourists-abroad.csv"
+    },
+    "transform": [
+      {
+        "filter": {
+          "field": "Entity",
+          "oneOf": ["United States", "Malaysia", "Australia", "China", "Russia", "United Kingdom"]
+        }
+      }
+    ],
+    "vconcat": [
+      
+      {
+        "width": 1100,
+        "height": 400,
+        "title": "Detailed View - Tourist Expenditures by Country",
+        "mark": {"type": "area", "interpolate": "monotone"},
+        "encoding": {
+          "x": {
+            "field": "Year",
+            "type": "temporal",
+            "scale": {"domain": {"param": "time_brush"}},
+            "axis": {"title": "Year", "tickCount": 10, "grid": false, "format": "%Y"}
+          },
+          "y": {
+            "field": "International expenditure on travel abroad (adjusted for inflation)",
+            "type": "quantitative",
+            "title": "Expenditure (USD)",
+            "axis": {"format": ".2s"}
+          },
+          "color": {
+            "field": "Entity",
+            "type": "nominal",
+            "title": "Country",
+            "scale": {
+              "range": ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"]
+            }
+          },
+          "tooltip": [
+            {"field": "Entity", "type": "nominal", "title": "Country"},
+            {"field": "Year", "type": "temporal", "title": "Year", "format": "%Y"},
+            {"field": "International expenditure on travel abroad (adjusted for inflation)", "type": "quantitative", "title": "Expenditure (USD)", "format": ",.0f"}
+          ]
+        }
+      },
+      {
+        "width": 1100,
+        "height": 60,
+        "mark": {"type": "area", "interpolate": "monotone"},
+        "title": "Use this overview chart to brush and filter the data above",
+        "params": [
+          {
+            "name": "time_brush",
+            "select": {"type": "interval", "encodings": ["x"]}
+          }
+        ],
+        "encoding": {
+          "x": {
+            "field": "Year",
+            "type": "temporal",
+            "axis": {"title": "", "format": "%Y"}
+          },
+          "y": {
+            "aggregate": "sum",
+            "field": "International expenditure on travel abroad (adjusted for inflation)",
+            "axis": {"tickCount": 3, "grid": false},
+            "title": "Total Expenditure"
+          },
+          "color": {
+            "field": "Entity",
+            "type": "nominal",
+            "legend": null,
+            "scale": {
+              "range": ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"]
+            }
+          }
+        }
+      }
+      
+    ],
+    "config": {
+      "title": {"font": "sans-serif", "fontSize": 14},
+      "axis": {"labelFont": "sans-serif", "titleFont": "sans-serif"},
+      "legend": {"labelFont": "sans-serif", "titleFont": "sans-serif"}
+    }
+  }

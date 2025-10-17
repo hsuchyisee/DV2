@@ -1,0 +1,54 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "A population pyramid for travelers by age and gender",
+  "data": { "url": "data/Travel details dataset.csv"},
+  "transform": [
+    {"calculate": "toNumber(datum['Traveler age'])", "as": "age_numeric"},
+    {"filter": "isValid(datum.age_numeric)"},
+    {
+      "calculate": "datum.age_numeric < 25 ? '20-24' : datum.age_numeric < 30 ? '25-29' : datum.age_numeric < 35 ? '30-34' : datum.age_numeric < 40 ? '35-39' : datum.age_numeric < 45 ? '40-44' : '45+'",
+      "as": "age_group"
+    },
+    {"calculate": "datum['Traveler gender']", "as": "gender"},
+    {
+      "aggregate": [{"op": "count", "as": "count"}],
+      "groupby": ["age_group", "gender"]
+    },
+    {"calculate": "datum.gender == 'Female' ? -datum.count : datum.count", "as": "signed_count"}
+  ],
+  "width": 400,
+  "height": 250,
+  "mark": "bar",
+  "encoding": {
+    "y": {
+      "field": "age_group",
+      "type": "ordinal",
+      "axis": {"title": "Age Group"},
+      "sort": ["20-24", "25-29", "30-34", "35-39", "40-44", "45+"]
+    },
+    "x": {
+      "field": "signed_count",
+      "type": "quantitative",
+      "title": "Number of Travelers",
+      "axis": {
+        "format": "d",
+        "labelExpr": "abs(datum.value)"
+      }
+    },
+    "color": {
+      "field": "gender",
+      "type": "nominal",
+      "scale": {"range": ["#e377c2", "#1f77b4"]},
+      "legend": {"orient": "top", "title": "Gender"}
+    },
+    "tooltip": [
+      {"field": "age_group", "type": "ordinal", "title": "Age Group"},
+      {"field": "gender", "type": "nominal", "title": "Gender"},
+      {"field": "count", "type": "quantitative", "title": "Count"}
+    ]
+  },
+  "config": {
+    "view": {"stroke": null},
+    "axis": {"grid": false}
+  }
+}

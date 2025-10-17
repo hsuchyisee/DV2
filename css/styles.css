@@ -1,0 +1,232 @@
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+body * {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.main-container {
+    max-width: 1500px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-left: 4px solid #4682b4;
+    border-right: 4px solid #4682b4;
+    min-height: 100vh;
+}
+
+.content-wrapper {
+    padding: 0 60px 40px 60px;
+}
+
+.page {
+    width: 1024px;
+    background-color: white;
+    margin: auto;
+    padding: 50px;
+    padding-top: 10px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1 {
+    font-weight: 900;
+}
+
+.vis-container {
+    width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    overflow: hidden;
+    box-sizing: border-box;
+    text-align: center; /* Center content within vis-container */
+}
+
+/* Center content in Pure CSS grid units */
+.pure-u-1 {
+    text-align: center;
+}
+
+.pure-u-1-2 {
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+/* Ensure all Vega-Lite visualizations respect container bounds */
+.vis-container .vega-embed {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.vis-container .vega-embed summary {
+    display: none;
+}
+
+.vis-container svg {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+.description h2,
+h1 {
+    margin-top: 0px;
+}
+
+.description-right {
+    padding-left: 20px;
+    font-size: small;
+}
+
+.description-left {
+    padding-right: 20px;
+}
+
+.description-center {
+    padding: 20px;
+    font-size: small;
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+.small-font {
+    font-size: 14px;
+}
+
+#map_plot {
+	margin: 0 auto;
+	padding: 0;
+	width: 100%;
+	max-width: 100%;
+	overflow: hidden;
+	text-align: center;
+}
+
+#area_plot {
+	margin: 0 auto;
+	padding: 0;
+	width: 100%;
+	max-width: 100%;
+	overflow: hidden;
+}
+
+#area_plot .vega-embed {
+	margin: 0 auto !important;
+	display: block !important;
+}
+
+#area_plot .vega-embed .vega-actions {
+	display: none !important;
+    align-content: center;
+}
+
+
+#scatter_plot {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	max-width: 100%;
+	overflow: hidden;
+    margin-bottom: 30px;
+}
+
+#scatter_plot .vis-container {
+    padding: 15px;
+    margin: 0;
+}
+
+/* Airplane icon styling */
+.airplane-icon {
+    margin: 0 50px;
+}
+
+/* Data units list styling */
+.data-units-list {
+    color: #666;
+    line-height: 1.8;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.data-units-list li {
+    margin-bottom: 12px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .pure-u-1-2 {
+        width: 100% !important;
+    }
+    
+    .content-wrapper {
+        padding: 0 20px 20px 20px;
+    }
+    
+    .main-container {
+        margin: 0 10px;
+    }
+    
+    .airplane-icon {
+        margin: 0 20px; /* Reduce spacing on mobile */
+    }
+}
+
+.top-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-bar-text {
+  flex: 1;
+  text-align: center;
+}
+
+.top-bar {
+    background: linear-gradient(135deg, #4682b4, #5a96c7);
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.top-bar h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.hr3 {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #4682b4, transparent);
+    margin: 30px 0;
+    opacity: 0.6;
+}
+
+#map_plot .vega-bindings {
+  font-size: medium;
+  position: absolute;
+  bottom: 30%;
+  left: 75%;
+  border: 2px solid #4682b4; /* Steel blue border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px; /* Space inside the container */
+  background-color: #f9f9f9; /* Light background for better visibility */
+}
+
+#map_plot .vega-legend {
+  border: 2px solid #4682b4; /* Steel blue border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px; /* Space inside the border */
+  background-color: #f9f9f9; /* Light background for better visibility */
+}
+
