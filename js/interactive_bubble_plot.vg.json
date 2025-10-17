@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 600,
+  "width": 560,
   "height": 450,
   "title": "Tourism Analysis: Interactive Comparison with Economic Factors",
   "data": {
@@ -48,8 +48,7 @@
       "title": "Selected Economic Factor",
       "axis": {
         "tickCount": 6,
-        "grid": true,
-        "gridOpacity": 0.3,
+        "grid": false,
         "tickMinStep": 1
       },
       "scale": {
@@ -63,7 +62,7 @@
       "field": "tourism_receipts",
       "type": "quantitative",
       "title": "Tourism Receipts (USD)",
-      "axis": {"tickCount": 6, "grid": true},
+      "axis": {"tickCount": 6, "grid": false},
       "scale": {"type": "log", "nice": true}
     }
   },
@@ -141,12 +140,6 @@
         "fontSize": 11,
         "fontStyle": "italic",
         "color": "#666"
-      },
-      "data": {"values": [{"annotation": "Higher GDP countries tend to have higher tourism receipts"}]},
-      "encoding": {
-        "text": {"field": "annotation", "type": "nominal"},
-        "x": {"value": 580},
-        "y": {"value": 430}
       }
     }
   ]
