@@ -30,6 +30,10 @@
       
     </div>
     
+    <div class="main-title">
+      <h2>Departures & Arrivals: Mapping Global Tourism Flows</h2>
+    </div>
+    
     <div class="content-wrapper">
   <hr class="hr3">
 
@@ -122,6 +126,12 @@
     "width": 350,
     "height": 300
   }).then(function(result) {
+    // Force centering after embed
+    const embed = document.querySelector('#scatter_plot .vega-embed');
+    if (embed) {
+      embed.style.margin = '0 auto';
+      embed.style.display = 'block';
+    }
   }).catch(console.error);
 
   // var treeSpec = "js/mosaic.vg.json";
@@ -138,6 +148,12 @@
     "width": 350,
     "height": 300
   }).then(function(result) {
+    // Force centering after embed
+    const embed = document.querySelector('#pyramid .vega-embed');
+    if (embed) {
+      embed.style.margin = '0 auto';
+      embed.style.display = 'block';
+    }
   }).catch(console.error);
 </script>
 
