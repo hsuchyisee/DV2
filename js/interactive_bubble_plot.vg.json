@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 560,
-  "height": 450,
+  "width": "container",
+  "height": 600,
   "title": "Tourism Analysis: Interactive Comparison with Economic Factors",
   "data": {
     "url": "data/world_tourism_economy_data.csv"
@@ -61,7 +61,7 @@
     "y": {
       "field": "tourism_receipts",
       "type": "quantitative",
-      "title": "Tourism Receipts (USD)",
+      "title": "Log Tourism Receipts (USD)",
       "axis": {"tickCount": 6, "grid": false},
       "scale": {"type": "log", "nice": true}
     }
@@ -76,7 +76,7 @@
           "scale": {
             "type": "threshold",
             "domain": [100000, 1000000, 5000000, 20000000, 50000000],
-            "range": [20, 60, 120, 200, 300, 400]
+            "range": [30, 100, 500, 1000, 1500, 2100]
           },
           "legend": {"format": ".1s", "title": "Tourism Arrivals"}
         },
@@ -114,10 +114,6 @@
         "text": {"field": "country", "type": "nominal"},
         "color": {"value": "black"},
         "opacity": {
-          "condition": {
-            "test": "datum['country'] == 'United States' || datum['country'] == 'Spain' || datum['country'] == 'France' || datum['country'] == 'Italy' || datum['country'] == 'China' || datum['country'] == 'Germany' || datum['country'] == 'United Kingdom'",
-            "value": 1
-          },
           "value": 0
         },
         "tooltip": [

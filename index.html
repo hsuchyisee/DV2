@@ -7,6 +7,10 @@
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
   
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@400;700&display=swap" rel="stylesheet">
   
   <!-- CSS file -->
   <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
@@ -35,13 +39,7 @@
     </div>
     
     <div class="content-wrapper">
-  <hr class="hr3">
 
-<div class="pure-g">
-  <div class="pure-u-1">
-    <div id="map_plot" class="vis-container"></div>
-  </div>
-</div>
 
 <hr class="hr3">
 
@@ -54,45 +52,27 @@
 <hr class="hr3">
 
 <div class="pure-g">
-  <div class="pure-u-1-2">
+  <div class="pure-u-1">
     <div id="scatter_plot" class="vis-container"></div>
-  </div>
-  <div class="pure-u-1-2">
-    <div id="pyramid" class="vis-container"></div>
   </div>
 </div>
 
-<!-- <hr class="hr3"> -->
-
-<!-- <div class="pure-g">
-  <div class="pure-u-1">
-    <div class="description description-center">
-      <h3>Understanding Data Units:</h3>
-      <ul class="data-units-list">
-        <li><strong>Tourism Exports:</strong> Tourism services exported (USD millions)</li>
-        <li><strong>Tourism Departures:</strong> People traveling abroad from residence country</li>
-        <li><strong>Tourism Expenditures:</strong> Resident spending abroad (USD millions)</li>
-        <li><strong>Inflation:</strong> Annual price change (percentage)</li>
-        <li><strong>Unemployment:</strong> Unemployed labor force (percentage)</li>
-        <li><strong>Tourism Receipts:</strong> International tourism revenue (USD)</li>
-        <li><strong>Bubble Size:</strong> Tourism arrivals (visitor numbers)</li>
-        <li><strong>Bubble Color:</strong> GDP in USD (darker = higher)</li>
-      </ul>
-    </div>
-  </div>
-</div> -->
-<!-- 
 <hr class="hr3">
-<div class="pure-g">
-  <div class="pure-u-1">
-    <div id="treemap" class="vis-container"></div>
-  </div>
-</div> -->
 
-<hr class="hr3">
 <div class="pure-g">
-  <div class="pure-u-1">
+  <div class="pure-u-1-2">
+    <div id="pyramid" class="vis-container"></div>
+  </div>
+  <div class="pure-u-1-2">
     <div id="waffle" class="vis-container"></div>
+  </div>
+</div>
+
+  <hr class="hr3">
+
+<div class="pure-g">
+  <div class="pure-u-1">
+    <div id="map_plot" class="vis-container"></div>
   </div>
 </div>
 
@@ -122,16 +102,7 @@
   // Embed the scatter plot visualization
   var scatterSpec = "js/interactive_bubble_plot.vg.json";
   vegaEmbed('#scatter_plot', scatterSpec, { 
-    "actions": false,
-    "width": 350,
-    "height": 300
-  }).then(function(result) {
-    // Force centering after embed
-    const embed = document.querySelector('#scatter_plot .vega-embed');
-    if (embed) {
-      embed.style.margin = '0 auto';
-      embed.style.display = 'block';
-    }
+    "actions": false
   }).catch(console.error);
 
   // var treeSpec = "js/mosaic.vg.json";
@@ -139,7 +110,17 @@
   // }).catch(console.error);
 
   var waffleSpec = "js/waffle.vg.json";
-  vegaEmbed('#waffle', waffleSpec, { "actions": false }).then(function(result) {
+  vegaEmbed('#waffle', waffleSpec, { 
+    "actions": false,
+    "width": 350,
+    "height": 300
+  }).then(function(result) {
+    // Force centering after embed
+    const embed = document.querySelector('#waffle .vega-embed');
+    if (embed) {
+      embed.style.margin = '0 auto';
+      embed.style.display = 'block';
+    }
   }).catch(console.error);
 
   var pyrSpec = "js/pop_pyr.vg.json";

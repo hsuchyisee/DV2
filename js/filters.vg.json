@@ -76,7 +76,7 @@
               "color": {
                 "field": "expenditure_sum",
                 "type": "quantitative",
-                "title": "Tourist Expenditure (USD)",
+                "title": "Average Expenditure (USD)",
                 "scale": {
                   "type": "log",
                   "scheme": "blues",
@@ -95,6 +95,7 @@
                   "symbolStrokeWidth": 0,
                   "gradientLength": 150,
                   "gradientThickness": 15
+
                 }
               },
               "tooltip": [
