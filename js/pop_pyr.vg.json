@@ -16,14 +16,14 @@
     },
     {"calculate": "datum.gender == 'Female' ? -datum.count : datum.count", "as": "signed_count"}
   ],
-  "width": 400,
+  "width": 510,
   "height": 250,
   "mark": "bar",
   "encoding": {
     "y": {
       "field": "age_group",
       "type": "ordinal",
-      "axis": {"title": "Age Group"},
+      "axis": {"title": "Age Group", "titleFontSize": 14, "labelFontSize": 14},
       "sort": ["20-24", "25-29", "30-34", "35-39", "40-44", "45+"]
     },
     "x": {
@@ -32,14 +32,16 @@
       "title": "Number of Travelers",
       "axis": {
         "format": "d",
-        "labelExpr": "abs(datum.value)"
+        "labelExpr": "abs(datum.value)",
+        "titleFontSize": 14,
+        "labelFontSize": 14
       }
     },
     "color": {
       "field": "gender",
       "type": "nominal",
-      "scale": {"range": ["#e377c2", "#1f77b4"]},
-      "legend": {"orient": "top", "title": "Gender"}
+      "scale": {"range": ["#e4572e", "#29335c"]},
+      "legend": {"orient": "top", "title": "Gender", "titleFontSize": 14, "labelFontSize": 12}
     },
     "tooltip": [
       {"field": "age_group", "type": "ordinal", "title": "Age Group"},
@@ -49,6 +51,7 @@
   },
   "config": {
     "view": {"stroke": null},
-    "axis": {"grid": false}
+    "axis": {"grid": false, "titleFontSize": 14, "labelFontSize": 14},
+    "legend": {"titleFontSize": 14, "labelFontSize": 12}
   }
 }

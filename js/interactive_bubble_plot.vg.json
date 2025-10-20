@@ -2,14 +2,15 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
   "height": 600,
-  "title": "Tourism Analysis: Interactive Comparison with Economic Factors",
+
   "data": {
-    "url": "data/world_tourism_economy_data.csv"
+    "url": "data/world_tourism_economy_data_averaged.csv"
   },
   "params": [
     {
       "name": "Factor_selection",
       "value": "tourism_exports",
+      
       "bind": {
         "input": "select",
         "options": [
@@ -31,12 +32,13 @@
     }
   ],
   "transform": [
-    
-    {"filter": "datum.tourism_receipts > 0"},
-    {"filter": "datum.year == 2018"},
+    {
+      "calculate": "datum.tourism_receipts > 0 ? datum.tourism_receipts : 1000",
+      "as": "tourism_receipts_clean"
+    },
     {"filter": "!isValid(datum.country_code) || length(datum.country_code) == 3"},
     {
-      "calculate": "Factor_selection == 'tourism_exports' ? datum.tourism_exports : Factor_selection == 'tourism_departures' ? datum.tourism_departures : Factor_selection == 'tourism_expenditures' ? datum.tourism_expenditures : Factor_selection == 'inflation' ? datum.inflation : datum.unemployment",
+      "calculate": "Factor_selection == 'unemployment' ? datum.unemployment : Factor_selection == 'tourism_departures' ? datum.tourism_departures : Factor_selection == 'tourism_expenditures' ? datum.tourism_expenditures : Factor_selection == 'inflation' ? datum.inflation : datum.tourism_exports",
       "as": "selected_factor"
     },
     {"filter": "datum.selected_factor > 0"}
@@ -49,7 +51,9 @@
       "axis": {
         "tickCount": 6,
         "grid": false,
-        "tickMinStep": 1
+        "tickMinStep": 1,
+        "titleFontSize": 14,
+        "labelFontSize": 14
       },
       "scale": {
         "type": "linear", 
@@ -59,16 +63,28 @@
       }
     },
     "y": {
-      "field": "tourism_receipts",
+      "field": "tourism_receipts_clean",
       "type": "quantitative",
       "title": "Log Tourism Receipts (USD)",
-      "axis": {"tickCount": 6, "grid": false},
+      "axis": {"tickCount": 6,
+               "grid": false,
+               "titleAlign": "left",
+               "titleAngle": 0,
+               "titleX": -10,
+               "titleY": -10,
+               "titleFontSize": 14,
+               "labelFontSize": 14
+              },
       "scale": {"type": "log", "nice": true}
     }
   },
   "layer": [
     {
-      "mark": "circle",
+      "mark": {
+        "type": "circle",
+        "stroke": "gray",
+        "strokeWidth": 1
+      },
       "encoding": {
         "size": {
           "field": "tourism_arrivals",
@@ -78,22 +94,34 @@
             "domain": [100000, 1000000, 5000000, 20000000, 50000000],
             "range": [30, 100, 500, 1000, 1500, 2100]
           },
-          "legend": {"format": ".1s", "title": "Tourism Arrivals"}
+          "legend": {
+            "format": ".1s", 
+            "title": "Tourism Arrivals",
+            "titleFontSize": 14,
+            "labelFontSize": 12
+          }
         },
         "color": {
-          "field": "gdp",
-          "type": "quantitative",
-          "scale": {
-            "type": "threshold",
-            "domain": [1000000000, 10000000000, 100000000000, 1000000000000],
-            "range": ["#ffffcc", "#c7e9b4", "#7fcdbb", "#41b6c4", "#253494"]
+          "condition": {
+            "test": "indexof(['United States', 'Malaysia', 'Australia', 'China', 'Russian Federation'], datum.country) >= 0",
+            "field": "country",
+            "type": "nominal",
+            "scale": {
+              "domain": ["Australia", "China", "Malaysia", "Russian Federation", "United States"],
+              "range": ["#504f80", "#cde6f0", "#006466", "#e4e3d0", "#d85e00"]
+            },
+            "legend": {
+              "title": "Highlighted Countries",
+              "titleFontSize": 14,
+              "labelFontSize": 12,
+              "padding": 5
+            }
           },
-          "legend": {"format": ".1s", "title": "GDP (USD)"}
+          "value": "#cccccc"
         },
-        "opacity": {"value": 0.7},
+        "opacity": {"value": 0.65},
         "tooltip": [
           {"field": "country", "type": "nominal", "title": "Country"},
-          {"field": "year", "type": "ordinal", "title": "Year"},
           {"field": "tourism_receipts", "type": "quantitative", "format": ",", "title": "Tourism Receipts (USD)"},
           {"field": "tourism_arrivals", "type": "quantitative", "format": ",", "title": "Tourism Arrivals"},
           {"field": "selected_factor", "type": "quantitative", "format": ".2f", "title": "Selected Factor"},
@@ -107,7 +135,7 @@
         "align": "right",
         "baseline": "middle",
         "dx": -12,
-        "fontSize": 11,
+        "fontSize": 14,
         "fontStyle": "italic"
       },
       "encoding": {
@@ -118,7 +146,6 @@
         },
         "tooltip": [
           {"field": "country", "type": "nominal", "title": "Country"},
-          {"field": "year", "type": "ordinal", "title": "Year"},
           {"field": "tourism_receipts", "type": "quantitative", "format": ",", "title": "Tourism Receipts (USD)"},
           {"field": "tourism_arrivals", "type": "quantitative", "format": ",", "title": "Tourism Arrivals"},
           {"field": "selected_factor", "type": "quantitative", "format": ".2f", "title": "Selected Factor"},
@@ -133,7 +160,7 @@
         "baseline": "bottom",
         "dx": -10,
         "dy": -10,
-        "fontSize": 11,
+        "fontSize": 14,
         "fontStyle": "italic",
         "color": "#666"
       }

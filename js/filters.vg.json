@@ -1,13 +1,16 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "autosize": {
+      "type": "fit",
+      "contains": "padding"
+    },
     "data": {
       "url": "data/average-expenditures-of-tourists-abroad.csv"
     },
     "vconcat": [
       {
         "width": "container",
-        "height": 500,
-        "title": "International Tourist Expenditures by Country",
+        "height": 550,
         "projection": {"type": "equalEarth",  "rotate": [0, 0, 0], "center": [0,0]},
         "layer": [
           {
@@ -88,9 +91,9 @@
                   "direction": "vertical",
                   "titleAlign": "left",
                   "titleAnchor": "start",
-                  "titleFontSize": 12,
+                  "titleFontSize": 14,
                   "titleFontWeight": "bold",
-                  "labelFontSize": 10,
+                  "labelFontSize": 12,
                   "symbolSize": 100,
                   "symbolStrokeWidth": 0,
                   "gradientLength": 150,
@@ -102,6 +105,22 @@
                 {"field": "Entity", "type": "nominal", "title": "Country"},
                 {"field": "expenditure_sum", "type": "quantitative", "title": "Expenditure (USD)", "format": ",.0f"}
               ]
+            }
+          },
+          {
+            "data": {"values": [{}]},
+            "mark": {
+              "type": "text",
+              "align": "left",
+              "baseline": "top",
+              "fontSize": 14,
+              "fontStyle": "italic",
+              "color": "#000000"
+            },
+            "encoding": {
+              "x": {"value": 150},
+              "y": {"value": 250},
+              "text": {"value": ["COVID-19  and  quarantine measures led"," to dramatic drops in tourism around 2020", "with  gradual  recovery  in  2021  &  2022.","Watch  how  the  map  lightens  in  2020!"]}
             }
           }
         ]
@@ -121,12 +140,31 @@
           "x": {
             "field": "Year",
             "type": "temporal",
-            "axis": {"title": "", "format": "%Y"}
+            "axis": {
+              "title": "", 
+              "format": "%Y",
+              "labelAngle": 0,
+              "labelPadding": 5,
+              "tickCount": 10,
+              "labelAlign": "right",
+              "titleFontSize": 14,
+              "labelFontSize": 14
+            },
+            "scale": {"nice": true}
           },
           "y": {
             "aggregate": "sum",
             "field": "International expenditure on travel abroad (adjusted for inflation)",
-            "axis": {"tickCount": 3, "grid": false},
+            "axis": {
+              "tickCount": 3, 
+              "grid": false,
+              "titleAlign": "left",
+              "titleAngle": 0,
+              "titleX": -10,
+              "titleY": -10,
+              "titleFontSize": 14,
+              "labelFontSize": 14
+            },
             "title": "Global Total Expenditure"
           },
           "color": {"value": "#666"}
@@ -136,49 +174,110 @@
         "width": "container",
         "height": 300,
         "title": "Tourist Expenditures by Country - Detailed View",
-        "transform": [
-          {"filter": {"param": "time_brush"}},
+        "layer": [
           {
-            "filter": {
-              "field": "Entity",
-              "oneOf": ["United States", "Malaysia", "Australia", "China", "Russia", "United Kingdom"]
-            }
-          }
-        ],
-        "mark": {"type": "area", "interpolate": "monotone"},
+            "transform": [
+              {"filter": {"param": "time_brush"}},
+              {
+                "filter": {
+                  "field": "Entity",
+                  "oneOf": ["United States", "Malaysia", "Australia", "China", "Russia"]
+                }
+              }
+            ],
+            "mark": {"type": "area", "interpolate": "monotone", "stroke": "floralwhite", "strokeWidth": 1},
         "encoding": {
+          
           "x": {
             "field": "Year",
             "type": "temporal",
-            "axis": {"title": "Year", "format": "%Y"}
+            "axis": {
+              "title": "Year", 
+              "format": "%Y",
+              "labelAngle": 0,
+              "labelPadding": 5,
+              "tickCount": 10,
+              "labelAlign": "right",
+              "offset": 10,
+              "grid": false,
+              "titleFontSize": 14,
+              "labelFontSize": 14
+            },
+            "scale": {"nice": true}
           },
           "y": {
             "field": "International expenditure on travel abroad (adjusted for inflation)",
             "type": "quantitative",
             "title": "Expenditure (USD)",
-            "axis": {"format": ".2s"}
+            "axis": {
+              "format": ".2s", 
+              "labelOffset": 10,
+              "titleAlign": "left",
+              "titleAngle": 0,
+              "titleX": -10,
+              "titleY": -10,
+              "offset": 10,
+              "grid": false,
+              "titleFontSize": 14,
+              "labelFontSize": 14
+            }
           },
           "color": {
             "field": "Entity",
             "type": "nominal",
             "title": "Country",
             "scale": {
-              "range": ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"]
+              "range": ["#504f80", "#cde6f0", "#006466", "#e4e3d0", "#d85e00"]
+            },
+            "legend": {
+              "orient": "top-left",
+              "direction": "vertical",
+              "titleAlign": "left",
+              "titleAnchor": "start",
+              "titleFontSize": 14,
+              "titleFontWeight": "bold",
+              "labelFontSize": 12,
+              "symbolSize": 100,
+              "symbolStrokeWidth": 0,
+              "fillColor":"white",
+              "padding": 5,
+              "cornerRadius": 5,
+              "strokeColor": "#4682b4"
             }
           },
+          "opacity": {"value": 0.65},
           "tooltip": [
             {"field": "Entity", "type": "nominal", "title": "Country"},
             {"field": "Year", "type": "temporal", "title": "Year", "format": "%Y"},
             {"field": "International expenditure on travel abroad (adjusted for inflation)", "type": "quantitative", "title": "Expenditure (USD)", "format": ",.0f"}
           ]
         }
+      },
+      {
+        "data": {"values": [{}]},
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "baseline": "top",
+          "fontSize": 14,
+          "fontStyle": "italic",
+          "color": "#000000"
+        },
+        "encoding": {
+          "x": {"value": 150},
+          "y": {"value": 40},
+          "text": {"value": ["Notice China's  exponential  rise  in  expenditure", "while the United States remains relatively stable", "throughout   the   1994   to   2022   time   period."]}
+        }
       }
+    ]
+  }
       
     ],
     "config": {
       "title": {"font": "sans-serif", "fontSize": 14},
-      "axis": {"labelFont": "sans-serif", "titleFont": "sans-serif"},
-      "legend": {"labelFont": "sans-serif", "titleFont": "sans-serif"},
-      "view": {"stroke": null}
+      "axis": {"labelFont": "sans-serif", "titleFont": "sans-serif", "titleFontSize": 14, "labelFontSize": 14},
+      "legend": {"labelFont": "sans-serif", "titleFont": "sans-serif", "titleFontSize": 14, "labelFontSize": 12},
+      "view": {"stroke": null},
+      "padding": {"right": 30}
     }
   }

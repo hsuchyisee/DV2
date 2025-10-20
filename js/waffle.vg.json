@@ -14,7 +14,17 @@
     {"calculate": "datum.CombinedCategory", "as": "Category"},
     {"calculate": "datum.total_value", "as": "value"}
   ],
-  "facet": {"field": "Category", "type": "nominal", "header": {"title": "", "labelLimit": 0}},
+  "facet": {
+    "field": "Category", 
+    "type": "nominal", 
+    "header": {
+      "title": "", 
+      "labelLimit": 0,
+      "labelFontSize": 14,
+      "labelColor": "#2c3e50"
+    },
+    "sort": {"field": "value", "order": "descending"}
+  },
   "columns": 3,
   "spec": {
     "width": 120,
@@ -35,9 +45,7 @@
           "color": {
             "condition": {
               "test": "datum.Plot === 'Share'",
-              "field": "Category",
-              "type": "nominal",
-              "scale": {"scheme": "category10"}
+              "value": "#817b70"
             },
             "value": "#E5E7E9"
           },
@@ -48,19 +56,39 @@
         }
       },
       {
-        "mark": {"type": "text", "fontSize": 12, "fontWeight": "bold"},
+        "mark": {
+          "type": "text", 
+          "fontSize": 14, 
+          "fontWeight": "bold",
+          "color": "#333",
+          "align": "center",
+          "baseline": "middle"
+        },
         "encoding": {
-          "x": {"aggregate": "min", "field": "col", "type": "ordinal", "axis": null},
-          "y": {"value": -6},
+          "x": {"value": 60},
+          "y": {"value": 60},
           "text": {
             "condition": {
               "test": "datum.Sequence == 1",
               "value": {"expr": "format(datum.value, '.1f') + '%'"}
-            }
+            },
+            "value": ""
+          },
+          "opacity": {
+            "condition": {
+              "test": "datum.Sequence == 1",
+              "value": 1
+            },
+            "value": 0
           }
         }
       }
     ]
   },
-  "config": {"view": {"stroke": null}, "background": "#fff"}
+  "config": {
+    "view": {"stroke": null}, 
+    "background": "#fff",
+    "axis": {"titleFontSize": 14, "labelFontSize": 14},
+    "legend": {"titleFontSize": 14, "labelFontSize": 12}
+  }
 }
