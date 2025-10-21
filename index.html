@@ -19,6 +19,7 @@
 </head>
 <body>
   <div class="main-container">
+    <img src="assets/stamp.png" alt="Stamp" class="stamp-image">
     <div class="top-bar">
       <div class="top-bar-text">
         <h1>DV Airlines</h1>
@@ -35,27 +36,39 @@
     </div>
     
     <div class="main-title">
-      <h2>Departures & Arrivals: Mapping Global Tourism Trends</h2>
-      <h3>Visualizing two decades of growth, disruption, and shifting travel patterns</h3>
+      <h2>Departures & Arrivals:<br>Mapping Global Tourism Trends</h2>
+      <h3>Visualising two decades of growth, disruption, and shifting travel patterns</h3>
     </div>
     
     <div class="content-wrapper">
 
-
 <hr class="hr3">
 <div class="plot-title">
-  <h2>Who Are the World's Biggest Tourist Spenders?</h2>
+  <h2>Why do people <span class="highlight-blue">travel</span>?</h2>
 </div>
 <div class="pure-g">
   <div class="pure-u-1">
-    <div id="area_plot" class="vis-container"></div>
+    <div id="bar" class="vis-container"></div>
+  </div>
+</div>
+
+<hr class="hr3">
+<div class="plot-title">
+  <h2>The World's <span class="highlight-blue">Top Destinations</span></h2>
+  <h3>Where travelers go to relax, explore, and connect</h3>
+</div>
+<div class="pure-g">
+  <div class="pure-u-1">
+    <div id="map_plot" class="vis-container"></div>
   </div>
 </div>
 
 
+
+
 <hr class="hr3">
 <div class="plot-title">
-  <h2>Does a Strong Economy Guarantee a Strong Tourism Sector?</h2>
+  <h2>Does a <span class="highlight-blue">Strong Economy</span> Guarantee a <span class="highlight-blue">Strong Tourism</span> Sector?</h2>
 </div>
 <div class="pure-g">
   <div class="pure-u-2-3">
@@ -108,18 +121,18 @@
 
 <hr class="hr3">
 <div class="plot-title">
-  <h2>The World's Most Visited Countries</h2>
-  <h3>A map of international tourist arrivals for the selected year</h3>
+  <h2>Who Are the World's Biggest Tourist <span class="highlight-blue">Spenders</span>?</h2>
+  <h3>Analysing which countries' residents spend the most on travel abroad</h3>
 </div>
 <div class="pure-g">
   <div class="pure-u-1">
-    <div id="map_plot" class="vis-container"></div>
+    <div id="area_plot" class="vis-container"></div>
   </div>
 </div>
 
 <hr class="hr3">
 <div class="plot-title">
-  <h2>Traveler Insights: Who Stays Where</h2>
+  <h2>Traveler Insights: <span class="highlight-blue">Who</span> Stays <span class="highlight-blue">Where</span></h2>
   <h3>A look into tourists and their booking behaviours.</h3>
 </div>
 <div class="pure-g">
@@ -152,10 +165,15 @@
 
   var pyrSpec = "js/pop_pyr.vg.json";
   vegaEmbed('#pyramid', pyrSpec).catch(console.error);
+
+  var pyrSpec = "js/bar.vg.json";
+  vegaEmbed('#bar', pyrSpec).catch(console.error);
 </script>
+
 
 <!-- Footnote Section -->
 <div class="footer-section">
+  
   <p>&copy; Hsu Chyi See, 2025</p>
   <p>Sources: <a href="https://ourworldindata.org/tourism" target="_blank">UNWTO (2024)</a>, <a href="https://www.kaggle.com/datasets/rkiattisak/traveler-trip-data" target="_blank">Rattanaporn (2022)</a>, <a href="https://www.kaggle.com/datasets/bushraqurban/tourism-and-economic-impact" target="_blank">Qurban (2024)</a>, <a href="https://radicalstorage.com/travel/travel-statistics-by-age/" target="_blank">Piva (2025)</a></p>
 </div>

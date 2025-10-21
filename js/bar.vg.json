@@ -1,0 +1,120 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "width": 700,
+  "height": 450,
+  "background": "#fafafa",
+  "padding": 20,
+  "data": {"url": "data/travel_reasons.csv"},
+  "transform": [
+    {
+      "calculate": "toNumber(replace(datum.Average, '%', ''))",
+      "as": "percentage"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusEnd": 8,
+        "stroke": "#ffffff",
+        "strokeWidth": 1,
+        "opacity": 0.9
+      },
+      "encoding": {
+        "x": {
+          "field": "percentage",
+          "type": "quantitative",
+          "title": "Percentage of Travelers (%)",
+          "axis": {
+            "titleFontSize": 14,
+            "labelFontSize": 14,
+            "titlePadding": 5,
+            "grid": true,
+            "gridColor": "#e0e0e0",
+            "gridOpacity": 0.5,
+            "tickColor": "#ccc",
+            "domainColor": "#ccc"
+          },
+          "scale": {"domain": [0, 80], "nice": true}
+        },
+        "y": {
+          "field": "Reason",
+          "type": "ordinal",
+          "title": null,
+          "axis": {
+            "labelFontSize": 14,
+            "labelLimit": 350,
+            "labelPadding": 10,
+            "tickSize": 0,
+            "domainColor": "transparent"
+          },
+          "sort": {
+            "field": "percentage",
+            "order": "descending"
+          }
+        },
+        "color": {
+          "field": "percentage",
+          "type": "quantitative",
+          "scale": {
+            "type": "linear",
+            "range": ["#1a4d82", "#1a4d82", "#1a4d82"],
+            "domain": [10, 40, 75]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "Reason", "type": "nominal", "title": "Travel Reason"},
+          {"field": "percentage", "type": "quantitative", "title": "Percentage", "format": ".0f"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -8,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "white"
+      },
+      "encoding": {
+        "x": {
+          "field": "percentage",
+          "type": "quantitative",
+          "scale": {"domain": [0, 80], "nice": true}
+        },
+        "y": {
+          "field": "Reason",
+          "type": "ordinal",
+          "sort": {
+            "field": "percentage",
+            "order": "descending"
+          }
+        },
+        "text": {
+          "field": "percentage",
+          "type": "quantitative",
+          "format": ".0f"
+        }
+      }
+    }
+  ],
+  "config": {
+    "axis": {
+      "titleFontSize": 14,
+      "labelFontSize": 12,
+      "titleColor": "#333",
+      "labelColor": "#555"
+    },
+    "title": {
+      "fontSize": 16,
+      "fontWeight": "bold",
+      "color": "#333"
+    },
+    "view": {
+      "stroke": "transparent"
+    }
+  }
+}

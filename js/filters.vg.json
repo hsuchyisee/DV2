@@ -126,7 +126,7 @@
         ]
       },
       {
-        "width": "container",
+        "width": 1170,
         "height": 60,
         "title": "Overview - Brush to filter time period",
         "params": [
@@ -144,13 +144,13 @@
               "title": "", 
               "format": "%Y",
               "labelAngle": 0,
-              "labelPadding": 5,
+              "labelPadding": 2,
               "tickCount": 10,
               "labelAlign": "right",
               "titleFontSize": 14,
               "labelFontSize": 14
             },
-            "scale": {"nice": true}
+            "scale": {"domain": ["1995", "2022"], "nice": true}
           },
           "y": {
             "aggregate": "sum",
@@ -171,7 +171,7 @@
         }
       },
       {
-        "width": "container",
+        "width": 1170,
         "height": 300,
         "title": "Tourist Expenditures by Country - Detailed View",
         "layer": [
@@ -195,7 +195,7 @@
               "title": "Year", 
               "format": "%Y",
               "labelAngle": 0,
-              "labelPadding": 5,
+              "labelPadding": 2,
               "tickCount": 10,
               "labelAlign": "right",
               "offset": 10,
@@ -203,7 +203,7 @@
               "titleFontSize": 14,
               "labelFontSize": 14
             },
-            "scale": {"nice": true}
+            "scale": {"nice": false}
           },
           "y": {
             "field": "International expenditure on travel abroad (adjusted for inflation)",
